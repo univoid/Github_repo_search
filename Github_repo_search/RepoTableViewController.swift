@@ -8,20 +8,20 @@
 
 import UIKit
 
-class RepoTableViewController: UITableViewController {
+class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     
     // MARK: Properties
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     
     var repos = [Repo]()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        // Handle the search bar’s user input through delegate callbacks.
+        searchBar.delegate = self
         
         // Load th sample data
         loadSampleRepos()
@@ -105,6 +105,18 @@ class RepoTableViewController: UITableViewController {
     */
     
     
+    // MARK: UISearchBarDelegate
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if !searchText.isEmpty {
+            print(searchText)
+        } else {
+            print("Nothin inputed")
+        }
+    }
+
+
     // MARK: Private Methods
     
     private func loadSampleRepos() {

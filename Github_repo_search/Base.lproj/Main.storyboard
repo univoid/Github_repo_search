@@ -58,6 +58,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Repo Search" id="d8C-eJ-DZh"/>
+                    <connections>
+                        <outlet property="searchBar" destination="U6q-HG-Es0" id="ckf-xl-PFK"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AgE-ig-rgD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
