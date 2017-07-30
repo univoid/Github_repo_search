@@ -15,7 +15,9 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     // MARK: Properties
     @IBOutlet weak var searchBar: UISearchBar!
     
-    
+    // basic part of URL
+    let baseURL = "https://api.github.com/search/repositories?q="
+    // the array of repo
     var repos = [Repo]()
     
 
@@ -111,8 +113,26 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
+        
         if !searchText.isEmpty {
             print(searchText)
+            if searchText.characters.count > 5 {
+                
+                // make request url
+                let url = baseURL + searchText
+                
+                // get response by Alamofire
+                Alamofire.request(url, method: .get).validate().responseJSON { response in
+                    switch response.result {
+                    case .success(let value):
+                        let json = JSON(value)
+                        print("JSON: \(json)")
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+            }
+            
         } else {
             print("Nothin inputed")
         }
