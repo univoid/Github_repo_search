@@ -33,4 +33,28 @@ class Github_repo_searchTests: XCTestCase {
         }
     }
     
+    
+    // MARK: Repo Class Tests
+    
+    // Confirm that the Repo initializer returns a Repo object when passed valid parameters
+    func testRepoInitializationSuccceeds() {
+        
+        // Repo without Description
+        let nilDesRepo = Repo.init(name: "God", owner: "me", des: "", star: 0)
+        XCTAssertNotNil(nilDesRepo)
+    }
+    
+    // Confirm that the Repo initializer returns nil when passed unvalid parameters
+    func testRepoInitializationFails() {
+        
+        // Repo without Name
+        let nilNameRepo = Repo.init(name: "", owner: "me", des: "", star: 0)
+        XCTAssertNil(nilNameRepo)
+        
+        // Repor with nagtive Star Count
+        let nagStarRepo = Repo.init(name: "God", owner: "me", des: "wantedly win", star: -1)
+        XCTAssertNil(nagStarRepo)
+        
+    }
+    
 }

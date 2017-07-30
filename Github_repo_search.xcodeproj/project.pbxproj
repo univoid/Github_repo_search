@@ -13,6 +13,8 @@
 		2F1237B51F2D8E2C002C88E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F1237B41F2D8E2C002C88E6 /* Assets.xcassets */; };
 		2F1237B81F2D8E2C002C88E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F1237B61F2D8E2C002C88E6 /* LaunchScreen.storyboard */; };
 		2F1237C31F2D8E2C002C88E6 /* Github_repo_searchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1237C21F2D8E2C002C88E6 /* Github_repo_searchTests.swift */; };
+		2F1237CE1F2D941F002C88E6 /* RepoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1237CD1F2D941F002C88E6 /* RepoTableViewCell.swift */; };
+		2F1237D01F2D997D002C88E6 /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1237CF1F2D997D002C88E6 /* Repo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,8 @@
 		2F1237BE1F2D8E2C002C88E6 /* Github_repo_searchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Github_repo_searchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F1237C21F2D8E2C002C88E6 /* Github_repo_searchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Github_repo_searchTests.swift; sourceTree = "<group>"; };
 		2F1237C41F2D8E2C002C88E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2F1237CD1F2D941F002C88E6 /* RepoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepoTableViewCell.swift; sourceTree = "<group>"; };
+		2F1237CF1F2D997D002C88E6 /* Repo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,8 @@
 			children = (
 				2F1237AD1F2D8E2C002C88E6 /* AppDelegate.swift */,
 				2F1237AF1F2D8E2C002C88E6 /* ViewController.swift */,
+				2F1237CD1F2D941F002C88E6 /* RepoTableViewCell.swift */,
+				2F1237CF1F2D997D002C88E6 /* Repo.swift */,
 				2F1237B11F2D8E2C002C88E6 /* Main.storyboard */,
 				2F1237B41F2D8E2C002C88E6 /* Assets.xcassets */,
 				2F1237B61F2D8E2C002C88E6 /* LaunchScreen.storyboard */,
@@ -203,6 +209,8 @@
 			files = (
 				2F1237B01F2D8E2C002C88E6 /* ViewController.swift in Sources */,
 				2F1237AE1F2D8E2C002C88E6 /* AppDelegate.swift in Sources */,
+				2F1237CE1F2D941F002C88E6 /* RepoTableViewCell.swift in Sources */,
+				2F1237D01F2D997D002C88E6 /* Repo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
