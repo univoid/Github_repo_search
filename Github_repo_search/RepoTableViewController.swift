@@ -23,7 +23,7 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     // the array of repo
     var repos = [Repo]()
     // timer for smooth search behavior
-    let timerInterval = 1.5
+    let timerInterval = 1.0
     var timer : Timer!
     var timeCount = 0
     var preKeyword: String!
@@ -124,6 +124,11 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     }
     */
     
+    // Hide the keyboard when scroll the table view
+    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchBar.resignFirstResponder()
+    }
+    
     
     // MARK: Timer event
     
@@ -149,6 +154,7 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
             print("Nothin inputed")
         }
     }
+    
 
 
     // MARK: Private Methods
