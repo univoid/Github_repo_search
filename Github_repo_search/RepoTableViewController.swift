@@ -117,22 +117,8 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
         if !searchText.isEmpty {
             print(searchText)
             if searchText.characters.count > 5 {
-                
-                // make request url
-                let url = baseURL + searchText
-                
-                // get response by Alamofire
-                Alamofire.request(url, method: .get).validate().responseJSON { response in
-                    switch response.result {
-                    case .success(let value):
-                        let json = JSON(value)
-                        print("JSON: \(json)")
-                    case .failure(let error):
-                        print(error)
-                    }
-                }
+                self.search(keyword: searchText)
             }
-            
         } else {
             print("Nothin inputed")
         }
@@ -141,6 +127,7 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
 
     // MARK: Private Methods
     
+    // Load Sample
     private func loadSampleRepos() {
         
         guard let repo1 = Repo(name: "repo01", owner: "univoid", des: "testtest", star: 0) else {
@@ -156,6 +143,59 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
         repos += [repo1, repo2, repo3]
     }
     
-    
+    // Get search result as array of Repo by using Github API
+    private func search(keyword: String) {
+        
+        // request url
+        let url = baseURL + keyword
+        
+        // get response by Alamofire
+        Alamofire.request(url, method: .get).validate().responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                self.createRepos(json: json)
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+
+    }
+    private func createRepos(json: JSON) {
+        
+        // Clear the repos array
+        repos.removeAll()
+        
+        // Iterate
+        for (_, subJson) in json["items"] {
+            
+            // Value check
+            guard let name = subJson["name"].string else {
+                fatalError("Name error")
+            }
+            
+            guard let owner = subJson["owner"]["login"].string else {
+                fatalError("Owner error")
+            }
+            
+            guard let des = subJson["description"].string else {
+                fatalError("Des error")
+            }
+            guard let star = subJson["stargazers_count"].int else {
+                fatalError("Star error")
+            }
+            
+            // Append new Repo instance to repos
+            guard let repo = Repo(name: name, owner: owner, des: des, star: star) else {
+                fatalError("Unable to instantiate Repo")
+            }
+            print(repo)
+            repos.append(repo)
+
+        }
+
+        
+    }
 
 }
