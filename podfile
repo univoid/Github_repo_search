@@ -6,6 +6,7 @@ target 'Github_repo_search' do
   use_frameworks!
   pod 'Alamofire', '4.4.0'
   pod 'SwiftyJSON'
+  # pod 'DLRadioButton', '~> 1.4'
   # Pods for Github_repo_search
 
   target 'Github_repo_searchTests' do

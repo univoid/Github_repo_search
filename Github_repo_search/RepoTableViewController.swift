@@ -75,6 +75,7 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
         
         cell.nameLabel.text = repo.name
         cell.desLabel.text = repo.description
+        cell.starLabel.text = String(repo.starCount)
 
         return cell
     }
