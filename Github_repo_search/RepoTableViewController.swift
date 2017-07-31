@@ -18,17 +18,29 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     
     // basic part of URL
     let baseURL = "https://api.github.com/search/repositories?q="
+    // search keyword
+    var keyword : String!
     // the array of repo
     var repos = [Repo]()
     // timer for smooth search behavior
-    var timer: Timer!
+    let timerInterval = 1.5
+    var timer : Timer!
+    var timeCount = 0
+    var preKeyword: String!
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Handle the search bar’s user input through delegate callbacks.
         searchBar.delegate = self
+        
+        // Initialize keyword
+        keyword = "haveFun"
+        preKeyword = "haveFun"
+        
+        // Initialize Timer
+        timer = Timer.scheduledTimer(timeInterval: timerInterval, target: self, selector: #selector(self.timeEvent), userInfo: nil, repeats: true)
         
         // Load th sample data
         loadSampleRepos()
@@ -113,16 +125,26 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     */
     
     
+    // MARK: Timer event
+    
+    func timeEvent() {
+        
+        // Check: keyword change or not within this timer interval
+        if preKeyword != keyword {
+            preKeyword = keyword
+            self.search(keyword: keyword)
+            print("now search")
+        }
+    }
+    
+    
     // MARK: UISearchBarDelegate
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        
         if !searchText.isEmpty {
-            print(searchText)
-            if searchText.characters.count > 5 {
-                self.search(keyword: searchText)
-            }
+            keyword = searchText
+            print(keyword)
         } else {
             print("Nothin inputed")
         }
@@ -184,13 +206,14 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
                 fatalError("Owner error")
             }
             
-            guard let des = subJson["description"].string else {
-                fatalError("Des error")
-            }
-            
             guard let star = subJson["stargazers_count"].int else {
                 fatalError("Star error")
             }
+            
+            // nil is allowed
+            let des = subJson["description"].string
+            
+
             
             // Append new Repo instance to repos
             guard let repo = Repo(name: name, owner: owner, des: des, star: star) else {
@@ -199,8 +222,7 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
             repos.append(repo)
 
         }
-
-        
     }
+    
 
 }
