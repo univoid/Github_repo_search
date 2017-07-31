@@ -20,6 +20,8 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     let baseURL = "https://api.github.com/search/repositories?q="
     // the array of repo
     var repos = [Repo]()
+    // timer for smooth search behavior
+    var timer: Timer!
     
 
     override func viewDidLoad() {
@@ -148,10 +150,10 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     // Get search result as array of Repo by using Github API
     private func search(keyword: String) {
         
-        // request url
+        // Request url
         let url = baseURL + keyword
         
-        // get response by Alamofire
+        // Get response by Alamofire
         Alamofire.request(url, method: .get).validate().responseJSON { response in
             switch response.result {
             case .success(let value):
