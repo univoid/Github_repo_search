@@ -14,6 +14,7 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     
     // MARK: Properties
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchTable: UITableView!
     
     // basic part of URL
     let baseURL = "https://api.github.com/search/repositories?q="
@@ -36,6 +37,7 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
         // Dispose of any resources that can be recreated.
     }
 
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -155,7 +157,8 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
             case .success(let value):
                 let json = JSON(value)
                 self.createRepos(json: json)
-                
+                // Reload table view
+                self.searchTable.reloadData()
             case .failure(let error):
                 print(error)
             }
@@ -182,6 +185,7 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
             guard let des = subJson["description"].string else {
                 fatalError("Des error")
             }
+            
             guard let star = subJson["stargazers_count"].int else {
                 fatalError("Star error")
             }
@@ -190,7 +194,6 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
             guard let repo = Repo(name: name, owner: owner, des: des, star: star) else {
                 fatalError("Unable to instantiate Repo")
             }
-            print(repo)
             repos.append(repo)
 
         }
