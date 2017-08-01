@@ -18,12 +18,16 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     
     // basic part of URL
     let baseURL = "https://api.github.com/search/repositories?q="
+    
     // search keyword
     var keyword : String!
+    
     // search parameter
     var sortp : String!
+    
     // the array of repo
     var repos = [Repo]()
+    
     // timer for smooth search behavior
     let timerInterval = 1.0
     var timer : Timer!
@@ -82,6 +86,7 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
         cell.nameLabel.text = repo.name
         cell.desLabel.text = repo.description
         cell.starLabel.text = String(repo.starCount)
+        cell.forkLabel.text = String(repo.forkCount)
 
         return cell
     }
@@ -160,7 +165,7 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
             keyword = searchText
             print(keyword)
         } else {
-            print("Nothin inputed")
+            print("Nothing inputed")
         }
     }
     
@@ -184,13 +189,13 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     // Load Sample
     private func loadSampleRepos() {
         
-        guard let repo1 = Repo(name: "repo01", owner: "univoid", des: "testtest", star: 0) else {
+        guard let repo1 = Repo(name: "repo01", owner: "univoid", des: "testtest", star: 0, fork:0) else {
             fatalError("Unable to instantiate repo1")
         }
-        guard let repo2 = Repo(name: "repo02", owner: "wantedly", des: "testtest", star: 0) else {
+        guard let repo2 = Repo(name: "repo02", owner: "wantedly", des: "testtest", star: 99, fork:0) else {
             fatalError("Unable to instantiate repo2")
         }
-        guard let repo3 = Repo(name: "repo03", owner: "God", des: "testtesttest", star: 0) else {
+        guard let repo3 = Repo(name: "repo03", owner: "God", des: "testtesttest", star: 98, fork: 42) else {
             fatalError("Unable to instantiate repo3")
         }
         
@@ -241,13 +246,16 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
                 fatalError("Star error")
             }
             
+            guard let fork = subJson["forks_count"].int else {
+                fatalError("Star error")
+            }
+            
             // nil is allowed
             let des = subJson["description"].string
             
 
-            
             // Append new Repo instance to repos
-            guard let repo = Repo(name: name, owner: owner, des: des, star: star) else {
+            guard let repo = Repo(name: name, owner: owner, des: des, star: star, fork: fork) else {
                 fatalError("Unable to instantiate Repo")
             }
             repos.append(repo)

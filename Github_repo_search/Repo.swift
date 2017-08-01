@@ -16,10 +16,11 @@ class Repo {
     var owner: String
     var description: String
     var starCount: Int
+    var forkCount: Int
     
     // MARK: Initialization
     
-    init?(name: String, owner: String, des: String?, star: Int) {
+    init?(name: String, owner: String, des: String?, star: Int, fork: Int) {
         
         // The name must not be empty
         guard !name.isEmpty else {
@@ -31,10 +32,16 @@ class Repo {
             return nil
         }
         
+        // fork must be positive
+        guard (fork >= 0) else {
+            return nil
+        }
+        
         // Initialize stored properties
         self.name = name
         self.owner = owner
         self.description = des ?? ""
         self.starCount = star
+        self.forkCount = fork
     }
 }
