@@ -20,6 +20,8 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     let baseURL = "https://api.github.com/search/repositories?q="
     // search keyword
     var keyword : String!
+    // search parameter
+    var sortp : String!
     // the array of repo
     var repos = [Repo]()
     // timer for smooth search behavior
@@ -27,6 +29,7 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     var timer : Timer!
     var timeCount = 0
     var preKeyword: String!
+    var preSortp: String!
     
     
     override func viewDidLoad() {
@@ -35,9 +38,12 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
         // Handle the search bar’s user input through delegate callbacks.
         searchBar.delegate = self
         
-        // Initialize keyword
+        // Initialize search bar: keyword and parameters
         keyword = "haveFun"
         preKeyword = "haveFun"
+        sortp = ""
+        preSortp = ""
+        searchBar.selectedScopeButtonIndex = 0
         
         // Initialize Timer
         timer = Timer.scheduledTimer(timeInterval: timerInterval, target: self, selector: #selector(self.timeEvent), userInfo: nil, repeats: true)
@@ -136,9 +142,10 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     func timeEvent() {
         
         // Check: keyword change or not within this timer interval
-        if preKeyword != keyword {
+        if preKeyword != keyword || preSortp != sortp {
             preKeyword = keyword
-            self.search(keyword: keyword)
+            preSortp = sortp
+            self.search(keyword: keyword, sort: sortp)
             print("now search")
         }
     }
@@ -146,6 +153,7 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     
     // MARK: UISearchBarDelegate
     
+    // get text changed
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         if !searchText.isEmpty {
@@ -153,6 +161,19 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
             print(keyword)
         } else {
             print("Nothin inputed")
+        }
+    }
+    
+    // get scope index changed
+    @objc(searchBar:selectedScopeButtonIndexDidChange:) func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        
+        guard let sort = searchBar.scopeButtonTitles?[selectedScope] else {
+            fatalError("Unable to get sort parameter.")
+        }
+        if sort == "default" {
+            self.sortp = ""
+        } else {
+            self.sortp = sort
         }
     }
     
@@ -177,10 +198,13 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     }
     
     // Get search result as array of Repo by using Github API
-    private func search(keyword: String) {
+    private func search(keyword: String, sort: String) {
         
-        // Request url
-        let url = baseURL + keyword
+        // Request urbaseURL + keywordl
+        var url = baseURL + keyword
+        if !sort.isEmpty {
+            url += "&sort=" + sort
+        }
         
         // Get response by Alamofire
         Alamofire.request(url, method: .get).validate().responseJSON { response in
