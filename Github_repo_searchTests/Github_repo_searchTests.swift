@@ -40,7 +40,7 @@ class Github_repo_searchTests: XCTestCase {
     func testRepoInitializationSuccceeds() {
         
         // Repo without Description
-        let nilDesRepo = Repo.init(name: "God", owner: "me", des: "", star: 0)
+        let nilDesRepo = Repo.init(name: "God", owner: "me", des: "", star: 0, fork: 0, url:"")
         XCTAssertNotNil(nilDesRepo)
     }
     
@@ -48,11 +48,11 @@ class Github_repo_searchTests: XCTestCase {
     func testRepoInitializationFails() {
         
         // Repo without Name
-        let nilNameRepo = Repo.init(name: "", owner: "me", des: "", star: 0)
+        let nilNameRepo = Repo.init(name: "", owner: "me", des: "", star: 0, fork: 0, url:"")
         XCTAssertNil(nilNameRepo)
         
         // Repor with nagtive Star Count
-        let nagStarRepo = Repo.init(name: "God", owner: "me", des: "wantedly win", star: -1)
+        let nagStarRepo = Repo.init(name: "God", owner: "me", des: "wantedly win", star: -1, fork: 0, url:"")
         XCTAssertNil(nagStarRepo)
         
     }
