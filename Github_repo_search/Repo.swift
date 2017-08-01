@@ -15,12 +15,13 @@ class Repo {
     var name: String
     var owner: String
     var description: String
+    var url: String
     var starCount: Int
     var forkCount: Int
     
     // MARK: Initialization
     
-    init?(name: String, owner: String, des: String?, star: Int, fork: Int) {
+    init?(name: String, owner: String, des: String?, star: Int, fork: Int, url: String) {
         
         // The name must not be empty
         guard !name.isEmpty else {
@@ -43,5 +44,6 @@ class Repo {
         self.description = des ?? ""
         self.starCount = star
         self.forkCount = fork
+        self.url = url
     }
 }

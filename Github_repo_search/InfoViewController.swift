@@ -9,9 +9,13 @@
 import UIKit
 import WebKit
 
-class ViewController: UIViewController, WKUIDelegate {
+class InfoViewController: UIViewController, WKUIDelegate {
     
     var webView: WKWebView!
+    
+    // URL parameter got from Repo Search
+    var paramURL: String!
+
     
     override func loadView() {
         // Initialize a webView
@@ -23,11 +27,9 @@ class ViewController: UIViewController, WKUIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Get url parameter from Repo Search
-        let param = "https://github.com/dtrupenn/Tetris"
         
         // Request for info
-        let myURL = URL(string: param)
+        let myURL = URL(string: paramURL)
         let myRequest = URLRequest(url: myURL!)
         webView.load(myRequest)
     }
@@ -36,4 +38,11 @@ class ViewController: UIViewController, WKUIDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // Actions
+//    @IBAction func unwindToInfo(sender: UIStoryboardSegue) {
+//        if let sourceViewController = sender.source as? RepoTableViewController {
+//            self.paramURL = sourceViewController.url
+//        }
+//    }
 }

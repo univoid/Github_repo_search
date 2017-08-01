@@ -35,6 +35,9 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     var preKeyword: String!
     var preSortp: String!
     
+    // URL sent to InfoView
+    var url: String!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +93,11 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
 
         return cell
     }
+    
+    // Test: Get the url of Repo Cell selected
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(repos[indexPath.row].url)
+    }
 
     
     // Hide the keyboard when scroll the table view
@@ -138,6 +146,25 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
         }
     }
     
+    
+    // MARK: Navigation
+    
+    // This method lets you configure a view controller before it's presented.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        super.prepare(for: segue, sender: sender)
+        
+        // Configure the destination view controller
+        if(segue.identifier == "sendURL") {
+            // Get targetView and Index of cell selected
+            if let infoView: InfoViewController = segue.destination as? InfoViewController,
+                let repoIndex = tableView.indexPathForSelectedRow?.row {
+                
+                // send URL to infoView
+                infoView.paramURL = repos[repoIndex].url
+            }
+        }
+    }
 
 
     // MARK: Private Methods
@@ -145,13 +172,13 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
     // Load Sample
     private func loadSampleRepos() {
         
-        guard let repo1 = Repo(name: "repo01", owner: "univoid", des: "testtest", star: 0, fork:0) else {
+        guard let repo1 = Repo(name: "repo01", owner: "univoid", des: "testtest", star: 0, fork:0, url: "https://github.com/univoid/Github_repo_search") else {
             fatalError("Unable to instantiate repo1")
         }
-        guard let repo2 = Repo(name: "repo02", owner: "wantedly", des: "testtest", star: 99, fork:0) else {
+        guard let repo2 = Repo(name: "repo02", owner: "wantedly", des: "testtest", star: 99, fork:0, url: "https://github.com/univoid/Github_repo_search") else {
             fatalError("Unable to instantiate repo2")
         }
-        guard let repo3 = Repo(name: "repo03", owner: "God", des: "testtesttest", star: 98, fork: 42) else {
+        guard let repo3 = Repo(name: "repo03", owner: "God", des: "testtesttest", star: 98, fork: 42, url: "https://github.com/univoid/Github_repo_search") else {
             fatalError("Unable to instantiate repo3")
         }
         
@@ -206,12 +233,16 @@ class RepoTableViewController: UITableViewController, UISearchBarDelegate {
                 fatalError("Fork error")
             }
             
+            guard let url = subJson["html_url"].string else {
+                fatalError("URL error")
+            }
+            
             // nil is allowed
             let des = subJson["description"].string
             
 
             // Append new Repo instance to repos
-            guard let repo = Repo(name: name, owner: owner, des: des, star: star, fork: fork) else {
+            guard let repo = Repo(name: name, owner: owner, des: des, star: star, fork: fork, url: url) else {
                 fatalError("Unable to instantiate Repo")
             }
             repos.append(repo)
