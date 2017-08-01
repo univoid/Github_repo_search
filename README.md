@@ -2,7 +2,8 @@
 Wantedly intern interview project
 
 ### Demo version01:
-[Demo](https://www.dropbox.com/s/762uuoeb7g4qfq7/repo_search480p.gif)
+[Demo](https://www.dropbox.com/s/46s42u0yg5909ay/repo_search_v1_480p.mov?dl=0)
 
 
-<img src="https://raw.github.com/univoid/Github_repo_search/gif/repo_search480p.gif" />
+### Demo version02:
+[Demo](https://www.dropbox.com/s/w61l5gn8eb9znph/repo_search_v2_480p.mov?dl=0)

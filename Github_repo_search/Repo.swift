@@ -27,12 +27,12 @@ class Repo {
             return nil
         }
         
-        // star must be positive
+        // Star must be positive
         guard (star >= 0) else {
             return nil
         }
         
-        // fork must be positive
+        // Fork must be positive
         guard (fork >= 0) else {
             return nil
         }
