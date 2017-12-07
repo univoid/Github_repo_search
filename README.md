@@ -1,5 +1,4 @@
 # Github_repo_search
-Wantedly intern interview project
 
 ### Demo version01:
 [Demo01](https://www.dropbox.com/s/46s42u0yg5909ay/repo_search_v1_480p.mov?dl=0)
